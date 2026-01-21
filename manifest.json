@@ -2,6 +2,7 @@
   "name": "VibeFlow Cyber Timer",
   "short_name": "VibeFlow",
   "start_url": "./index.html",
+  "description": "Киберпанк таймер для глубокой концентрации",
   "display": "standalone",
   "background_color": "#050505",
   "theme_color": "#00f3ff",
