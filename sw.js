@@ -1,12 +1,15 @@
-const CACHE_NAME = 'vibeflow-v1';
+const CACHE_NAME = 'vibeflow-ogg-v1';
 const ASSETS = [
+  './',
   'index.html',
   'style.css',
   'script.js',
-  'sounds/bird-tweet.mp3',
-  'sounds/body_and_mind_harmony.mp3',
-  'sounds/cyberpunk_relax.mp3',
-  'sounds/peaceful_water_sounds.mp3'
+  'manifest.json',
+  'icon-512.png',
+  'sounds/bird-tweet.ogg',
+  'sounds/body_and_mind_harmony.ogg',
+  'sounds/cyberpunk_relax.ogg',
+  'sounds/peaceful_water_sounds.ogg'
 ];
 
 // Установка: кешируем все файлы

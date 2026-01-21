@@ -13,15 +13,14 @@ const soundSelect = document.getElementById('bg-sound');
 let timeLeft = timeSlider.value * 60;
 
 const playlist = [
-  { name: "Bird Tweet", url: "https://docs.google.com/uc?export=download&id=1bFvYkke-R5R5nO7qrJsjT_EiSc6WLahO" },
-  { name: "Body and Mind", url: "https://docs.google.com/uc?export=download&id=1wX5F3KBeUwSOjfEFs7yhidLti5_jUyiT" },
-  { name: "Cyberpunk Relax", url: "https://docs.google.com/uc?export=download&id=1RH4T1GXjcWYZ7BFe6U0ZARLbCBj_necb" },
-  { name: "Peaceful Water", url: "https://docs.google.com/uc?export=download&id=1slnR087SpG0JkPReAOx919h7YHdmJ-Yo" }
+  { name: "Bird Tweet", url: "sounds/bird-tweet.ogg" },          // Индекс 0
+  { name: "Body and Mind", url: "sounds/body_and_mind_harmony.ogg" }, // Индекс 1
+  { name: "Cyberpunk Relax", url: "sounds/cyberpunk_relax.ogg" },   // Индекс 2
+  { name: "Peaceful Water", url: "sounds/peaceful_water_sounds.ogg" } // Индекс 3
 ];
 
-// Назначаем звук птиц для финала из массива (он там под индексом 0)
+// Звук финиша подхватит обновленный путь
 const finishSound = new Audio(playlist[0].url);
-
 
 function toggleTimer() {
     if (isPaused) {
@@ -92,14 +91,22 @@ function changeSound() {
     if (selectedValue === "none") {
         audioPlayer.pause();
         audioPlayer.src = "";
-    } else {
-        // Берем URL из массива по индексу (минус 1, так как 0-й индекс — это птицы для финала)
-        const index = parseInt(selectedValue);
+        return;
+    }
+
+    const index = parseInt(selectedValue);
+    
+    // Проверка: существует ли такой элемент в массиве?
+    if (playlist[index]) {
+        console.log("Playing:", playlist[index].name);
         audioPlayer.src = playlist[index].url;
+        audioPlayer.load();
         
         if (!isPaused) {
-            audioPlayer.play().catch(e => console.log("Audio play blocked"));
+            audioPlayer.play().catch(e => console.log("Need to clock on display"));
         }
+    } else {
+        console.error("Ошибка: Sound with index " + index + " not found at the array playlist!");
     }
 }
 
