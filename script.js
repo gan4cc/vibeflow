@@ -117,9 +117,29 @@ function updateTimerDuration() {
     timeLeft = minutes * 60;
     updateDisplay();
 }
+function showUpdateNotify() {
+    const notify = document.createElement('div');
+    notify.innerHTML = `
+        <div style="position: fixed; top: 0; left: 0; width: 100%; background: #00f3ff; color: #000; 
+                    text-align: center; padding: 15px; z-index: 10000; font-weight: bold; cursor: pointer;">
+            Доступна новая версия! Нажми, чтобы обновить.
+        </div>
+    `;
+    notify.onclick = () => window.location.reload();
+    document.body.appendChild(notify);
+}
+// Проверка обновления при регистрации SW
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js')
-    .then(() => console.log("Service Worker Registered"));
+    navigator.serviceWorker.register('sw.js').then(reg => {
+        reg.onupdatefound = () => {
+            const installingWorker = reg.installing;
+            installingWorker.onstatechange = () => {
+                if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    showUpdateNotify(); // Показываем плашку, когда файлы скачаны
+                }
+            };
+        };
+    });
 }
 
 if ('serviceWorker' in navigator) {
