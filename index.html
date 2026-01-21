@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00f3ff">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeFlow | Cyber-Zen Focus</title>
+    <link rel="stylesheet" href="style.css">      
+</head>
+<body>
+    <div class="container">
+        <div class="zen-circle"></div>
+        
+        <h1 class="glitch" data-text="VibeFlow">VibeFlow</h1>
+        <p class="subtitle">Sync your breath, master your focus.</p>
+        <div class="timer-display" id="timer">25:00</div>
+        <div class="controls">
+            <button class="control-btn" id="startStopBtn" onclick="toggleTimer()">Enter the Flow</button>
+            <button class="control-btn reset-btn" onclick="resetTimer()">Reset</button>
+        </div>
+        <div class="sound-selector">
+            <label for="bg-sound">Ambience:</label>
+            <select id="bg-sound" onchange="changeSound()">
+                <option value="none">Silence</option>
+                <option value="1">Body and Mind</option>
+                <option value="2">Cyberpunk Relax</option>
+                <option value="3">Peaceful Water</option>
+            </select>
+        </div>
+        <div class="time-settings">
+            <label for="time-slider">Duration: <span id="time-value">25</span> min</label>
+            <input type="range" id="time-slider" min="1" max="60" value="25" oninput="updateTimerDuration()">
+        </div>
+        <audio id="audio-player" loop></audio>
+        </div>
+    <script src="script.js"></script>
+</body>
+</html>
