@@ -142,10 +142,47 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+// --- СИСТЕМА ОБНОВЛЕНИЯ PWA ---
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js')
-      .then(reg => console.log('PWA Ready!'))
-      .catch(err => console.log('PWA Error:', err));
-  });
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then(reg => {
+            // Проверка на наличие обновлений при загрузке
+            reg.addEventListener('updatefound', () => {
+                const newWorker = reg.installing;
+                newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        showUpdateNotify();
+                    }
+                });
+            });
+        });
+    });
+
+    // Перезагрузка страницы после активации нового Service Worker
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+            window.location.reload();
+            refreshing = true;
+        }
+    });
+}
+
+function showUpdateNotify() {
+    const notify = document.createElement('div');
+    notify.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; 
+        background: #00f3ff; color: #000; text-align: center; 
+        padding: 15px; z-index: 10000; font-weight: bold; 
+        cursor: pointer; box-shadow: 0 5px 15px rgba(0,243,255,0.4);
+    `;
+    notify.innerHTML = "Доступна новая версия! Нажми, чтобы обновить.";
+    notify.onclick = () => {
+        // Даем команду SW пропустить ожидание и активироваться
+        navigator.serviceWorker.getRegistration().then(reg => {
+            if (reg.waiting) reg.waiting.postMessage('skipWaiting');
+            else window.location.reload();
+        });
+    };
+    document.body.appendChild(notify);
 }

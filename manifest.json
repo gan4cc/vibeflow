@@ -5,12 +5,12 @@
   "scope": "/vibeflow/",
   "description": "Киберпанк таймер для глубокой концентрации",
   "display": "standalone",
-  "background_color": "#050505",
+  "background_color": "#000000",
   "theme_color": "#00f3ff",
   "icons": [
     {
       "src": "icon-512.png",
-      "sizes": "1024x1024",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     }
